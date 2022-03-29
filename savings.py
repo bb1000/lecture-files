@@ -1,11 +1,15 @@
 MONTHLY = 500
 INTEREST = 0.10 
+RETIREMENT = 70
 
 amount = 0.0
 
+start_age = int(input("Start saving at age: "))
+stop_age = int(input("Stop saving at age: "))
 
-for age in range(20, 25):
-    amount = amount + 12*MONTHLY
+for age in range(start_age, RETIREMENT):
+    if age < stop_age:
+        amount = amount + 12*MONTHLY
     amount = amount * (1 + INTEREST)
     amount = round(amount, 2)
     
