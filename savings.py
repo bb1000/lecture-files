@@ -8,3 +8,9 @@ amount = amount + 12*MONTHLY
 amount = amount * (1 + INTEREST)
 
 print(amount)
+
+# after two years
+amount = amount + 12*MONTHLY
+amount = amount * (1 + INTEREST)
+
+print(amount)
