@@ -6,8 +6,6 @@ RETIREMENT = 70
 
 amount = 0.0
 
-print(sys.argv)
-
 if len(sys.argv) < 3:
     start_age = int(input("Start saving at age: "))
     stop_age = int(input("Stop saving at age: "))
