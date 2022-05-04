@@ -1,35 +1,47 @@
 import argparse
-import sys
 
 MONTHLY = 500
 INTEREST = 0.10 
 RETIREMENT = 70
 
-def main(start_age, stop_age, txt='savings.txt', csv='savings.csv'):
-    amount = 0.0
-    breakpoint()
 
-    #if len(sys.argv) < 3:
-    #    start_age = int(input("Start saving at age: "))
-    #    stop_age = int(input("Stop saving at age: "))
-    #else:
-    #    start_age = int(sys.argv[1])
-    #    stop_age = int(sys.argv[2])
+class SavingsCalculator:
 
-    # f = open('savings.txt', 'w')
-    f = open(txt, 'w')
-    csvfile = open(csv, 'w')
-    csvfile.write('age,amount\n')
-    for age in range(start_age, RETIREMENT):
-        if age < stop_age:
-            amount = amount + 12*MONTHLY
-        amount = amount * (1 + INTEREST)
-        amount = round(amount, 2)
-        print(age, amount, file=f)
-        print(age, amount, file=csvfile, sep=',')
-        
-    print("Savings at age", age, amount)
-    return amount
+    def __init__(self, start_age, stop_age, txt='savings.txt', csv='savings.csv'):
+        self.start_age = start_age
+        self.stop_age = stop_age
+        self.txt = txt
+        self.csv = csv
+        self.savingsdata = []
+
+    def main(self):
+
+        amount = 0.0
+    
+        for age in range(self.start_age, RETIREMENT):
+            if age < self.stop_age:
+                amount = amount + 12*MONTHLY
+            amount = amount * (1 + INTEREST)
+            amount = round(amount, 2)
+            self.savingsdata.append((age, amount))
+
+    def to_txt(self):
+        f = open(self.txt, 'w')
+        for age, amount in self.savingsdata:
+            print(age, amount, file=f)
+        f.close()
+
+    def to_csv(self):
+        csvfile = open(self.csv, 'w')
+        csvfile.write('age,amount\n')
+        for age, amount in self.savingsdata:
+            print(age, amount, file=csvfile, sep=',')
+        csvfile.close()
+
+    def final(self):
+        age, amount = self.savingsdata[-1]
+        print("Savings at age", age, amount)
+        return amount
 
 # print('__name__ =',__name__)
 
@@ -47,7 +59,5 @@ if __name__ == '__main__':
     print(args.start_age)
     print(args.stop_age)
 
-
-
-    # main(int(sys.argv[1]), int(sys.argv[2]))
-    main(args.start_age, args.stop_age, txt=args.save_to_txt, csv=args.save_to_csv)
+    savings_calculator = SavingsCalculator(args.start_age, args.stop_age, txt=args.save_to_txt, csv=args.save_to_csv)
+    final_amount = savings_calculator.main()
